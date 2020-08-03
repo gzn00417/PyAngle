@@ -18,38 +18,32 @@ class Angle:
     minute = 0.0
     second = 0.0
 
-    DEGREE_MINUTE_SECOND = "DEGREE_MINUTE_SECOND"
-    DEGREE = "DEGREE"
-    RADIAN = "RADIAN"
-    XY = "XY"
-
-    def __init__(self, form, degree=0.0, minute=0.0, second=0.0, rad=0.0, x=0.0, y=0.0):
+    def __init__(self, degree=None, minute=None, second=None, rad=None, x=None, y=None):
         """Creator of Angle
         
-        Args:
-            degree (float): degree of the angle;
-            minute (float): minute of the angle;
-            second (float): second of the angle;
-            rad (float): Radian of the Angle;
-            x (float): horizontal ordinate;
-            y (float): vertical ordinate;
-            
+        Format Priority:
+        1. DMS: degree, minute, second;
+        2. Degree: degree;
+        3. Rad: rad;
+        4. (x, y): x, y
+
         """
-        if self.DEGREE_MINUTE_SECOND == form:
+        if degree is not None and minute is not None and second is not None:
             self.createByDMS(d=degree, m=minute, s=second)
-        elif self.DEGREE == form:
+        elif degree is not None:
             self.createByDegree(degree=degree)
-        elif self.RADIAN == form:
+        elif rad is not None:
             self.createByRadian(rad=rad)
-        elif self.XY == form:
+        elif x is not None and y is not None:
             self.createByXY(x=x, y=y)
+        else:
+            raise GeneratorExit
         self.adjust()
 
     def createByDMS(self, d, m=0.0, s=0.0):
         self.degree = float(d)
         self.minute = float(m)
         self.second = float(s)
-        self.adjust()
 
     def createByDegree(self, degree):
         self.createByDMS(d=degree)
@@ -87,7 +81,6 @@ class Angle:
         """(+)Calculate the sum of self and angle
         """
         return Angle(
-            form=self.DEGREE_MINUTE_SECOND,
             degree=self.getDegree() + other.getDegree(),
             minute=self.getMinute() + other.getMinute(),
             second=self.getSecond() + other.getSecond(),
@@ -97,50 +90,56 @@ class Angle:
         """(-)Calculate the difference of self(minuend) and angle(subtrahend)
         """
         return Angle(
-            form=self.DEGREE_MINUTE_SECOND,
             degree=self.getDegree() - other.getDegree(),
             minute=self.getMinute() - other.getMinute(),
             second=self.getSecond() - other.getSecond(),
         )
 
     def __mul__(self, n):
-        """(×)Calculate the product of self and angle
+        """(*)Calculate the product of self and angle
         """
         return Angle(
-            form=self.DEGREE_MINUTE_SECOND,
             degree=0,
             minute=0,
-            second=float(self.degree * 60 * 60 + self.minute * 60 + self.second) * n,
+            second=float(
+                self.getDegree() * 60 * 60 + self.getMinute() * 60 + self.getSecond()
+            )
+            * n,
         )
 
     def __truediv__(self, n):
         """(/)Calculate the true quotient of self and angle
         """
         return Angle(
-            form=self.DEGREE_MINUTE_SECOND,
             degree=0,
             minute=0,
-            second=float(self.degree * 60 * 60 + self.minute * 60 + self.second) / n,
+            second=float(
+                self.getDegree() * 60 * 60 + self.getMinute() * 60 + self.getSecond()
+            )
+            / n,
         )
 
     def __floordiv__(self, n):
         """(//)Calculate the floor quotient of self and angle
         """
         return Angle(
-            form=self.DEGREE_MINUTE_SECOND,
             degree=0,
             minute=0,
-            second=float(self.degree * 60 * 60 + self.minute * 60 + self.second) / n,
+            second=float(
+                self.getDegree() * 60 * 60 + self.getMinute() * 60 + self.getSecond()
+            )
+            / n,
         )
 
     def __mod__(self, other):
         """(%)Calculate the remainder of self and angle
         """
         return Angle(
-            form=self.DEGREE_MINUTE_SECOND,
             degree=0,
             minute=0,
-            second=float(self.degree * 60 * 60 + self.minute * 60 + self.second)
+            second=float(
+                self.getDegree() * 60 * 60 + self.getMinute() * 60 + self.getSecond()
+            )
             % float(
                 other.getDegree() * 60 * 60 + other.getMinute() * 60 + other.getSecond()
             ),
