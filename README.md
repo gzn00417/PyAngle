@@ -1,5 +1,7 @@
 # PyAngle
 
+![https://img.shields.io/badge/license-Apache%202.0-blue.svg?longCache=true&style=flat-square](https://img.shields.io/badge/license-Apache%202.0-blue.svg?longCache=true&style=flat-square)
+
 > A simple package for angle calculation
 
 # class Angle
