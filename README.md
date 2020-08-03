@@ -20,13 +20,14 @@
 ### Override
 
 - [x] `__init__(form, degree, minute, second, rad, x, y)`
-- [ ] `__add__(self, other)`
-- [ ] `__sub__(self, other)`
-- [ ] `__mul__(self, n)`
-- [ ] `__div__(self, n)`
-- [ ] `__cmp__(self, other)`
-- [ ] `__mod__(self, other)`
+- [x] `__add__(self, other)`
+- [x] `__sub__(self, other)`
+- [x] `__mul__(self, n)`
+- [x] `__truediv__(self, n)`: "/"
+- [x] `__floordiv__(self, n)`: "//"
+- [x] `__mod__(self, other)`
 - [ ] `__str__(self)`
+- [ ] `__cmp__(self, other)`
 
 ### Creator
 
@@ -37,7 +38,7 @@
 
 ### Mutator
 
-- [ ] `void adjust()`: 调整格式
+- [x] `void adjust()`: 调整格式
 
 ### Producer
 
@@ -55,9 +56,9 @@
 
 #### Getters
 
-- [ ] `int getDegree()`
-- [ ] `int getMinute()`
-- [ ] `float getSecond()`
+- [x] `int getDegree()`
+- [x] `int getMinute()`
+- [x] `float getSecond()`
 
 #### Switchers
 
