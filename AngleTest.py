@@ -70,6 +70,20 @@ class AngleTest(TestCase):
         )
         # TODO: test XXX, YYY
 
+    def test_cmp(self):
+        angle1 = Angle(degree=100, minute=10, second=1)
+        angle2 = Angle(degree=100, minute=10, second=0)
+        angle3 = Angle(degree=100, minute=10, second=2)
+        angle4 = Angle(degree=101, minute=9, second=0)
+        angle5 = Angle(degree=100, minute=10, second=1)
+        self.assertTrue(angle1 == angle1)
+        self.assertTrue(angle1 >= angle2)
+        self.assertTrue(angle1 < angle3)
+        self.assertTrue(angle4 > angle1)
+        self.assertTrue(angle2 <= angle3)
+        self.assertTrue(angle1 != angle4)
+        self.assertTrue(angle1 == angle5)
+
 
 if __name__ == "__main__":
     unittest.main()
