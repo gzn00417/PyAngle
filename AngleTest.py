@@ -15,9 +15,11 @@ class AngleTest(TestCase):
         self.assertEqual(angle2.getDegree(), 4)
         self.assertAlmostEqual(angle2.getMinute(), 20)
         self.assertNotEqual(angle2.getSecond(), 0)
+        self.assertAlmostEqual(angle2.toDegrees(), 4.3456, delta=0.01)
 
         angle3 = Angle(rad=1.5708)
         self.assertAlmostEqual(angle3.getDegree(), 90, delta=1)
+        self.assertAlmostEqual(angle3.toRadians(), 1.5708, delta=0.01)
 
         angle4 = Angle(x=1, y=1)
         self.assertAlmostEqual(angle4.getDegree(), 45, delta=1)
@@ -47,13 +49,26 @@ class AngleTest(TestCase):
     def test_floordiv(self):
         angle1 = Angle(degree=100, minute=10, second=1)
         angle2 = angle1 // 6
-        self.assertAlmostEqual(angle2.getDegree(), 16, delta=1)
+        self.assertAlmostEqual(angle2.getDegree(), 17, delta=1)
 
     def test_mod(self):
         angle1 = Angle(degree=100, minute=10, second=1)
         angle2 = Angle(degree=330, minute=30, second=3)
         angle3 = angle2 % angle1
         self.assertAlmostEqual(angle3.getDegree(), 30, delta=1)
+
+    def test_str_toString(self):
+        angle1 = Angle(degree=100, minute=10, second=1)
+        self.assertEqual(str(angle1), "100 10 1.00")
+        self.assertEqual(angle1.toString(), "100°10′1.00″")
+        self.assertEqual(angle1.toString(form="aaaDbbbMcccS"), "100D10M1.00S")
+        self.assertEqual(
+            angle1.toString(form="DDDD"), "{:.2f}D".format(angle1.toDegrees())
+        )
+        self.assertEqual(
+            angle1.toString(form="RRRr"), "{:.2f}r".format(angle1.toRadians())
+        )
+        # TODO: test XXX, YYY
 
 
 if __name__ == "__main__":
