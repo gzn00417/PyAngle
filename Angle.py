@@ -7,15 +7,18 @@ A simple package for angle calculation
 
 class Angle:
     """Class of Mathematic Angle\n
+    > designed especially for angle in the form of DMS(Degree, Minute and Second)\n
     > immutable object\n
-    degree (int): degree of the angle;\n
-    minute (int): minute of the angle;\n
-    second (float): second of the angle;\n
+    `degree` (int): degree of the angle;\n
+    `minute` (int): minute of the angle;\n
+    `second` (float): second of the angle;\n
     """
 
     degree = 0.0
     minute = 0.0
     second = 0.0
+
+    __DELTA = 0.0001  # float compare limit
 
     def __init__(self, degree=None, minute=None, second=None, rad=None, x=None, y=None):
         """Creator of Angle\n
@@ -26,30 +29,30 @@ class Angle:
         4. (x, y): x, y\n
         """
         if degree is not None and minute is not None and second is not None:
-            self.createByDMS(d=degree, m=minute, s=second)
+            self.__createByDMS(d=degree, m=minute, s=second)
         elif degree is not None:
-            self.createByDegree(degree=degree)
+            self.__createByDegree(degree=degree)
         elif rad is not None:
-            self.createByRadian(rad=rad)
+            self.__createByRadian(rad=rad)
         elif x is not None and y is not None:
-            self.createByXY(x=x, y=y)
+            self.__createByXY(x=x, y=y)
         else:
             raise GeneratorExit
         self.adjust()
 
-    def createByDMS(self, d, m=0.0, s=0.0):
+    def __createByDMS(self, d, m=0.0, s=0.0):
         self.degree = float(d)
         self.minute = float(m)
         self.second = float(s)
 
-    def createByDegree(self, degree):
-        self.createByDMS(d=degree)
+    def __createByDegree(self, degree):
+        self.__createByDMS(d=degree)
 
-    def createByRadian(self, rad):
-        self.createByDegree(degree=math.degrees(rad))
+    def __createByRadian(self, rad):
+        self.__createByDegree(degree=math.degrees(rad))
 
-    def createByXY(self, x, y):
-        self.createByRadian(rad=math.atan2(y, x))
+    def __createByXY(self, x, y):
+        self.__createByRadian(rad=math.atan2(y, x))
 
     def adjust(self):
         """Adjust the Format of the Angle, Satisfy: 0 <= d < 360, 0 <= m, s < 60
@@ -148,14 +151,66 @@ class Angle:
             ),
         )
 
-    def __str__(self):
+    def __cmp__(self, other) -> (int):
+        """compare two angles\n
+        -1 if self <  other;\n
+        0  if self == other;\n
+        1  if self >  other;
+        """
+        if self.getDegree() > other.getDegree():
+            return 1
+        elif self.getDegree() < other.getDegree():
+            return -1
+        else:
+            if self.getMinute() > other.getMinute():
+                return 1
+            elif self.getMinute() < other.getMinute():
+                return -1
+            else:
+                if self.getSecond() - other.getSecond() > self._DELTA:
+                    return 1
+                elif other.getSecond() - self.getSecond() > self._DELTA:
+                    return -1
+        return 0
+
+    def __eq__(self, other) -> (bool):
+        """==
+        """
+        return self.__cmp__(other) == 0
+
+    def __ne__(self, other) -> (bool):
+        """!=
+        """
+        return self.__cmp__(other) != 0
+
+    def __le__(self, other) -> (bool):
+        """<=
+        """
+        return self.__cmp__(other) < 1
+
+    def __lt__(self, other) -> (bool):
+        """<
+        """
+        return self.__cmp__(other) == -1
+
+    def __ge__(self, other) -> (bool):
+        """>=
+        """
+        return self.__cmp__(other) > -1
+
+    def __gt__(self, other) -> (bool):
+        """>
+        """
+        return self.__cmp__(other) == 1
+
+    def __str__(self) -> (str):
         """Convert angle into string(" " as interval)
         """
         return "{:d} {:d} {:.2f}".format(
             self.getDegree(), self.getMinute(), self.getSecond()
         )
 
-    def toDegrees(self):
+    def toDegrees(self) -> (float):
         """Convert angle into degrees(only degree(float) without minute & second)
         """
         return float(
@@ -164,12 +219,12 @@ class Angle:
             + self.getSecond() / 60.0 / 60.0
         )
 
-    def toRadians(self):
+    def toRadians(self) -> (float):
         """Convert angle into radians(float)
         """
         return math.radians(self.toDegrees())
 
-    def toString(self, form="aaa°bbb′ccc″"):
+    def toString(self, form="aaa°bbb′ccc″") -> (str):
         """Convert angle into string of form(default: `"aaa°bbb′ccc″"`)\n
         `aaa` is degree, `bbb` is minute, `ccc` is second, `DDD` is only degree(float),
         `RRR` is radian, `XXX` is horizontal ordinate, `YYY` is vertical ordinate.\n
@@ -203,3 +258,4 @@ class Angle:
         else:
             # TODO
             raise Exception
+
