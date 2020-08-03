@@ -25,6 +25,7 @@ class Angle:
 
     def __init__(self, form, degree=0.0, minute=0.0, second=0.0, rad=0.0, x=0.0, y=0.0):
         """Creator of Angle
+        
         Args:
             degree (float): degree of the angle;
             minute (float): minute of the angle;
@@ -32,6 +33,7 @@ class Angle:
             rad (float): Radian of the Angle;
             x (float): horizontal ordinate;
             y (float): vertical ordinate;
+            
         """
         if self.DEGREE_MINUTE_SECOND == form:
             self.createByDMS(d=degree, m=minute, s=second)
@@ -80,4 +82,67 @@ class Angle:
 
     def getSecond(self):
         return float(self.second)
+
+    def __add__(self, other):
+        """(+)Calculate the sum of self and angle
+        """
+        return Angle(
+            form=self.DEGREE_MINUTE_SECOND,
+            degree=self.getDegree() + other.getDegree(),
+            minute=self.getMinute() + other.getMinute(),
+            second=self.getSecond() + other.getSecond(),
+        )
+
+    def __sub__(self, other):
+        """(-)Calculate the difference of self(minuend) and angle(subtrahend)
+        """
+        return Angle(
+            form=self.DEGREE_MINUTE_SECOND,
+            degree=self.getDegree() - other.getDegree(),
+            minute=self.getMinute() - other.getMinute(),
+            second=self.getSecond() - other.getSecond(),
+        )
+
+    def __mul__(self, n):
+        """(×)Calculate the product of self and angle
+        """
+        return Angle(
+            form=self.DEGREE_MINUTE_SECOND,
+            degree=0,
+            minute=0,
+            second=float(self.degree * 60 * 60 + self.minute * 60 + self.second) * n,
+        )
+
+    def __truediv__(self, n):
+        """(/)Calculate the true quotient of self and angle
+        """
+        return Angle(
+            form=self.DEGREE_MINUTE_SECOND,
+            degree=0,
+            minute=0,
+            second=float(self.degree * 60 * 60 + self.minute * 60 + self.second) / n,
+        )
+
+    def __floordiv__(self, n):
+        """(//)Calculate the floor quotient of self and angle
+        """
+        return Angle(
+            form=self.DEGREE_MINUTE_SECOND,
+            degree=0,
+            minute=0,
+            second=float(self.degree * 60 * 60 + self.minute * 60 + self.second) / n,
+        )
+
+    def __mod__(self, other):
+        """(%)Calculate the remainder of self and angle
+        """
+        return Angle(
+            form=self.DEGREE_MINUTE_SECOND,
+            degree=0,
+            minute=0,
+            second=float(self.degree * 60 * 60 + self.minute * 60 + self.second)
+            % float(
+                other.getDegree() * 60 * 60 + other.getMinute() * 60 + other.getSecond()
+            ),
+        )
 
