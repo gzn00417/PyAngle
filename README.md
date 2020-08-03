@@ -26,7 +26,7 @@
 - [x] `__truediv__(self, n)`: "/"
 - [x] `__floordiv__(self, n)`: "//"
 - [x] `__mod__(self, other)`
-- [ ] `__str__(self)`
+- [x] `__str__(self)`
 - [ ] `__cmp__(self, other)`
 
 ### Creator
@@ -44,10 +44,6 @@
 
 #### Calculators
 
-- [ ] `Angle add(anotherAngle)`: 加法
-- [ ] `Angle sub(anotherAngle)`: 减法
-- [ ] `Angle mul(n)`: 乘法
-- [ ] `Angle div(n)`: 除法
 - [ ] `float sin()`
 - [ ] `float cos()`
 - [ ] `float tan()`
@@ -62,10 +58,10 @@
 
 #### Switchers
 
-- [ ] `float toDegrees()`
-- [ ] `float toRadians()`
+- [x] `float toDegrees()`
+- [x] `float toRadians()`
 - [ ] `(float, float) toCoorOfXY(x, y)`: 坐标，x、y 两者之一不为 0
-- [ ] `String toString(format)`: 指定格式输出字符串，默认`xxx°xxx′xxx″`
+- [x] `String toString(format)`: 指定格式输出字符串，默认`xxx°xxx′xxx″`
 
 #### Judges
 
