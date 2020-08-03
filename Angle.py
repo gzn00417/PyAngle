@@ -184,22 +184,22 @@ class Angle:
         return self.__cmp__(other) != 0
 
     def __le__(self, other) -> (bool):
-        """<=
+        """\<=
         """
         return self.__cmp__(other) < 1
 
     def __lt__(self, other) -> (bool):
-        """<
+        """\<
         """
         return self.__cmp__(other) == -1
 
     def __ge__(self, other) -> (bool):
-        """>=
+        """\>=
         """
         return self.__cmp__(other) > -1
 
     def __gt__(self, other) -> (bool):
-        """>
+        """\>
         """
         return self.__cmp__(other) == 1
 
