@@ -6,6 +6,7 @@
 
 # class Angle
 
+> designed especially for angle in the form of DMS(Degree, Minute and Second)
 > immutable object
 > default: public, non-static
 
@@ -20,14 +21,20 @@
 ### Override
 
 - [x] `__init__(form, degree, minute, second, rad, x, y)`
-- [x] `__add__(self, other)`
-- [x] `__sub__(self, other)`
-- [x] `__mul__(self, n)`
+- [x] `__add__(self, other)`: "+"
+- [x] `__sub__(self, other)`: "-"
+- [x] `__mul__(self, n)`: "\*"
 - [x] `__truediv__(self, n)`: "/"
 - [x] `__floordiv__(self, n)`: "//"
-- [x] `__mod__(self, other)`
+- [x] `__mod__(self, other)`: "%
 - [x] `__str__(self)`
-- [ ] `__cmp__(self, other)`
+- [x] `__cmp__(self, other)`
+- [x] `__eq__(self, other)`: "=="
+- [x] `__ne__(self, other)`: "!="
+- [x] `__le__(self, other)`: "<="
+- [x] `__lt__(self, other)`: "<"
+- [x] `__ge__(self, other)`: ">="
+- [x] `__gt__(self, other)`: ">"
 
 ### Creator
 
@@ -72,9 +79,6 @@
 - [ ] `bool isStraightAngle()`: 平角
 - [ ] `bool isMajorAngle()`: 优角
 - [ ] `bool isMinorAngle()`: 劣角
-- [ ] `bool isBiggerThan(anotherAngle)`
-- [ ] `bool isSmallerThan(anotherAngle)`
-- [ ] `bool isEqual(anotherAngle)`
 
 ### Static Methods
 
