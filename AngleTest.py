@@ -102,6 +102,21 @@ class AngleTest(TestCase):
         self.assertTupleEqual(angle1.toXY(x=1), (1, math.tan(math.radians(30))))
         self.assertTupleEqual(angle1.toXY(y=math.sqrt(3)), (3, math.sqrt(3)))
 
+    def test_judge_angle_types(self):
+        self.assertTrue(Angle(degree=0).isZeroAngle())
+        self.assertTrue(Angle(degree=30).isAcuteAngle())
+        self.assertTrue(Angle(degree=30).isMinorAngle())
+        self.assertFalse(Angle(degree=30).isRightAngle())
+        self.assertTrue(Angle(degree=90).isRightAngle())
+        self.assertTrue(Angle(degree=100).isObtuseAngle())
+        self.assertFalse(Angle(degree=100).isRightAngle())
+        self.assertFalse(Angle(degree=100).isAcuteAngle())
+        self.assertFalse(Angle(degree=100).isStraightAngle())
+        self.assertTrue(Angle(degree=180).isStraightAngle())
+        self.assertFalse(Angle(degree=190).isMinorAngle())
+        self.assertTrue(Angle(degree=110).isMinorAngle())
+        self.assertTrue(Angle(degree=200).isMajorAngle())
+
 
 if __name__ == "__main__":
     unittest.main()

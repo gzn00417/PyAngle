@@ -6,8 +6,10 @@
 
 # class Angle
 
-> designed especially for angle in the form of DMS(Degree, Minute and Second)
+> Designed especially for angle in the form of DMS(Degree, Minute and Second)
+>
 > immutable object
+>
 > default: public, non-static
 
 ## Member Variables
@@ -72,13 +74,13 @@
 
 #### Judges
 
-- [ ] `bool isZeroAngle()`: 零角
-- [ ] `bool isAcuteAngle()`: 锐角
-- [ ] `bool isRightAngle()`: 直角
-- [ ] `bool isObtuseAngle()`: 钝角
-- [ ] `bool isStraightAngle()`: 平角
-- [ ] `bool isMajorAngle()`: 优角
-- [ ] `bool isMinorAngle()`: 劣角
+- [x] `bool isZeroAngle()`: 零角
+- [x] `bool isAcuteAngle()`: 锐角
+- [x] `bool isRightAngle()`: 直角
+- [x] `bool isObtuseAngle()`: 钝角
+- [x] `bool isStraightAngle()`: 平角
+- [x] `bool isMajorAngle()`: 优角
+- [x] `bool isMinorAngle()`: 劣角
 
 ### Static Methods
 

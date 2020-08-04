@@ -18,7 +18,8 @@ class Angle:
     minute = 0.0  # minute(int when output)
     second = 0.0  # second(float, default: "{:.2f}")
 
-    __DELTA = 0.0001  # const, floats equal difference limit
+    __REL_TOL = 0.001  # max relative diff
+    __ABS_TOL = 0.000001  # max absolute diff
 
     def __init__(self, degree=None, minute=None, second=None, rad=None, x=None, y=None):
         """Creator of Angle\n
@@ -183,9 +184,9 @@ class Angle:
                 return -1
             else:
                 # degrees and minutes are equal
-                if self.getSecond() - other.getSecond() > self.__DELTA:
+                if self.getSecond() - other.getSecond() > self.__ABS_TOL:
                     return 1  # self > other
-                elif other.getSecond() - self.getSecond() > self.__DELTA:
+                elif other.getSecond() - self.getSecond() > self.__ABS_TOL:
                     return -1  # self < other
         # all are equal
         return 0
@@ -322,8 +323,51 @@ class Angle:
         elif y is None:
             return (x, x * self.tan())  # y = x * tan
         # x, y are both not None and valid
-        elif abs(y / x - self.tan()) < self.__DELTA:  # y / x == tan
+        elif math.isclose(
+            y / x, self.tan(), rel_tol=self.__REL_TOL, abs_tol=self.__ABS_TOL
+        ):
             return (x, y)  # return themselves if checked
         # TODO: raise Exception
         return (None, None)
+
+    def isZeroAngle(self) -> (bool):  # 零角
+        """Judge if it is zero angle, that is, 0°
+        """
+        return math.isclose(
+            self.toDegrees(), 0, rel_tol=self.__REL_TOL, abs_tol=self.__ABS_TOL
+        )
+
+    def isAcuteAngle(self) -> (bool):
+        """Judge if it is acute angle(0°, 90°)
+        """
+        return self.toDegrees() > 0 and self.toDegrees() < 90
+
+    def isRightAngle(self) -> (bool):
+        """Judge if it is right angle, that is, 90°
+        """
+        return math.isclose(
+            self.toDegrees(), 90, rel_tol=self.__REL_TOL, abs_tol=self.__ABS_TOL
+        )
+
+    def isObtuseAngle(self) -> (bool):
+        """Judge if it is obtuse angle(90°, 180°)
+        """
+        return self.toDegrees() > 90 and self.toDegrees() < 180
+
+    def isMinorAngle(self) -> (bool):
+        """Judge if it is major angle(0°, 180°)
+        """
+        return self.toDegrees() > 0 and self.toDegrees() < 180
+
+    def isStraightAngle(self) -> (bool):
+        """Judge if it is right angle, that is, 180°
+        """
+        return math.isclose(
+            self.toDegrees(), 180, rel_tol=self.__REL_TOL, abs_tol=self.__ABS_TOL
+        )
+
+    def isMajorAngle(self) -> (bool):
+        """Judge if it is major angle(180°, 360°)
+        """
+        return self.toDegrees() > 180 and self.toDegrees() < 360
 
