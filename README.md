@@ -51,9 +51,9 @@
 
 #### Calculators
 
-- [ ] `float sin()`
-- [ ] `float cos()`
-- [ ] `float tan()`
+- [x] `float sin()`
+- [x] `float cos()`
+- [x] `float tan()`
 
 ### Observer
 
@@ -67,7 +67,7 @@
 
 - [x] `float toDegrees()`
 - [x] `float toRadians()`
-- [ ] `(float, float) toCoorOfXY(x, y)`: 坐标，x、y 两者之一不为 0
+- [x] `(float, float) toXY(x, y)`: 坐标，x、y 两者之一不为 0
 - [x] `String toString(format)`: 指定格式输出字符串，默认`xxx°xxx′xxx″`
 
 #### Judges

@@ -1,5 +1,6 @@
 import unittest
 from unittest import TestCase
+import math
 
 from Angle import *
 
@@ -68,7 +69,10 @@ class AngleTest(TestCase):
         self.assertEqual(
             angle1.toString(form="RRRr"), "{:.2f}r".format(angle1.toRadians())
         )
-        # TODO: test XXX, YYY
+        self.assertEqual(
+            angle1.toString(form="(XXX, YYY)"),
+            "({:.2f}, {:.2f})".format(angle1.cos(), angle1.sin()),
+        )
 
     def test_cmp(self):
         angle1 = Angle(degree=100, minute=10, second=1)
@@ -83,6 +87,20 @@ class AngleTest(TestCase):
         self.assertTrue(angle2 <= angle3)
         self.assertTrue(angle1 != angle4)
         self.assertTrue(angle1 == angle5)
+
+    def test_trigonometric_functions(self):
+        angle1 = Angle(degree=30)
+        self.assertAlmostEqual(angle1.sin(), 0.50, delta=0.01)
+        self.assertAlmostEqual(angle1.cos(), 0.87, delta=0.01)
+        self.assertAlmostEqual(angle1.tan(), 0.57, delta=0.01)
+
+    def test_toXY(self):
+        angle1 = Angle(degree=30)
+        self.assertTupleEqual(
+            angle1.toXY(), (math.cos(math.radians(30)), math.sin(math.radians(30)))
+        )
+        self.assertTupleEqual(angle1.toXY(x=1), (1, math.tan(math.radians(30))))
+        self.assertTupleEqual(angle1.toXY(y=math.sqrt(3)), (3, math.sqrt(3)))
 
 
 if __name__ == "__main__":
