@@ -2,7 +2,7 @@ import unittest
 from unittest import TestCase
 import math
 
-from Angle import *
+from PyAngle.Angle import *
 
 
 class AngleTest(TestCase):
