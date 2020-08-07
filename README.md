@@ -2,7 +2,11 @@
 
 > A simple package for angle calculation
 
-## use `pip install PyAngle`
+## Use
+
+```
+pip install PyAngle
+```
 
 # class Angle
 
@@ -12,17 +16,17 @@
 >
 > default: public, non-static
 
-## Member Variables
+## APIs
 
-- `int degree`
-- `int minute`
-- `float second`
+### Creators
 
-## Member Methods
+- [x] `from_dms()`
+- [x] `from_degrees()`
+- [x] `from_rad()`
+- [x] `from_atan2()`
 
-### Override
+### Operators
 
-- [x] `__init__(form, degree, minute, second, rad, x, y)`
 - [x] `__add__(self, other)`: "+"
 - [x] `__sub__(self, other)`: "-"
 - [x] `__mul__(self, n)`: "\*"
@@ -38,65 +42,43 @@
 - [x] `__ge__(self, other)`: ">="
 - [x] `__gt__(self, other)`: ">"
 
-### Creator
-
-- [x] `createByDMS(degree, minute, second)`
-- [x] `createByDegree(degree)`
-- [x] `createByRadian(rad)`
-- [x] `createByXY(x, y)`
-
-### Mutator
-
-- [x] `void adjust()`: 调整格式
-
-### Producer
-
-#### Calculators
+### Calculators
 
 - [x] `float sin()`
 - [x] `float cos()`
 - [x] `float tan()`
 
-### Observer
+### Getters
 
-#### Getters
+- [x] `int get_deg()`
+- [x] `int get_min()`
+- [x] `float get_sec()`
 
-- [x] `int getDegree()`
-- [x] `int getMinute()`
-- [x] `float getSecond()`
+### Switchers
 
-#### Switchers
+- [x] `float to_degrees()`
+- [x] `float to_rad()`
+- [x] `(float, float) to_atan2(x=None, y=None)`
+- [x] `String to_fmt_str(fmt="xxx°xxx′xxx″", decimal=2)`
 
-- [x] `float toDegrees()`
-- [x] `float toRadians()`
-- [x] `(float, float) toXY(x, y)`: 坐标，x、y 两者之一不为 0
-- [x] `String toString(format)`: 指定格式输出字符串，默认`xxx°xxx′xxx″`
+### Judges
 
-#### Judges
+- [x] `bool is_zero_angle()`: 零角
+- [x] `bool is_acute_angle()`: 锐角
+- [x] `bool is_right_angle()`: 直角
+- [x] `bool is_obtuse_angle()`: 钝角
+- [x] `bool is_straight_angle()`: 平角
+- [x] `bool is_major_angle()`: 优角
+- [x] `bool is_minor_angle()`: 劣角
 
-- [x] `bool isZeroAngle()`: 零角
-- [x] `bool isAcuteAngle()`: 锐角
-- [x] `bool isRightAngle()`: 直角
-- [x] `bool isObtuseAngle()`: 钝角
-- [x] `bool isStraightAngle()`: 平角
-- [x] `bool isMajorAngle()`: 优角
-- [x] `bool isMinorAngle()`: 劣角
+## Future Features
 
-### Static Methods
-
-#### Producer
-
+- [ ] Support `sort()`
 - [ ] `Angle[] toAnglesFromXYs((float, float)[] angles)`: 参数为(x, y)元组的列表
 - [ ] `Angle[] toAnglesFromDegrees(float[] angles)`: 参数为 degree 元组的列表
 - [ ] `Angle[] toAnglesFromRads(float[] angles)`: 参数为 rad 元组的列表
 - [ ] `(float, float)[] toXYsFromAngles(Angle[] angles)`
 - [ ] `float[] toDegreesFromAngles(Angle[] angles)`
 - [ ] `float[] toRadsFromAngles(Angle[] angles)`
-- [ ] `Angle[] sort(Angle[] angles, bool reverse)`
-
-#### Chooser
-
-- [ ] `Angle getBiggerAngle(angle1, angle2)`
-- [ ] `Angle getSmallerAngle(angle1, angle2)`
 - [ ] `Angle getNearestAngle(Angle angle, Angle[] angles)`: 在`angles`中找到与`angle`最近的角
 - [ ] `Angle getFurthestAngle(Angle angle, Angle[] angles)`: 在`angles`中找到与`angle`最远的角
