@@ -2,7 +2,7 @@ import math
 from fractions import Fraction
 from typing import Union
 
-input_t = Union[int, float, str, Fraction]
+input_types = Union[int, float, str, Fraction]
 
 """
 A simple package for angle calculation
@@ -13,149 +13,152 @@ class Angle:
     """Class of Mathematic Angle
     > designed especially for angle in the format of DMS(Degree, Minute and Second)
     > immutable object
-    `deg` (int): degree of the angle;
-    `minute` (int): minute of the angle;
-    `sec` (float): second of the angle;
+    `deg` (int): degree of the angle in the format of DMS;
+    `min` (int): minute of the angle in the format of DMS;
+    `sec` (float): second of the angle in the format of DMS;
+    `degrees` (float): degree of the angle in the format of ONLY degree;
+    `rad` (float): rad of the angle in the format of radians;
+    `atan2` (float, float): (x, y) of the angle in the format of 2D-vector;
     """
 
-    _deg: Fraction = Fraction(0)
+    __deg: Fraction = Fraction(0)
 
-    def __init__(self, deg: input_t):
-        self._deg = Fraction(deg)
-        self.adjust()
+    def __init__(self, deg: input_types):
+        self.__deg = Fraction(deg)
+        self.__adjust()
 
     @staticmethod
-    def from_dms(deg: input_t, minute: input_t = 0, sec: input_t = 0) -> 'Angle':
+    def from_dms(
+        deg: input_types, min: input_types = 0, sec: input_types = 0
+    ) -> "Angle":
         """Factory Method for Degree, Minute and Second
         """
-        return Angle(Fraction(deg) + Fraction(minute) / 60 + Fraction(sec) / 3600)
+        return Angle(Fraction(deg) + Fraction(min) / 60 + Fraction(sec) / 3600)
 
     @staticmethod
-    def from_degree(deg: input_t) -> 'Angle':
+    def from_degrees(degrees: input_types) -> "Angle":
         """Factory Method for ONLY Degree
         """
-        return Angle(deg)
+        return Angle(degrees)
 
     @staticmethod
-    def from_radian(rad: input_t) -> 'Angle':
+    def from_rad(rad: input_types) -> "Angle":
         """Factory Method for Radian
         """
         return Angle(Fraction(math.degrees(Fraction(rad))))
 
     @staticmethod
-    def from_atan2(x: input_t, y: input_t) -> 'Angle':
+    def from_atan2(x: input_types, y: input_types) -> "Angle":
         """Factory Method for (x, y)
         """
-        return Angle.from_radian(math.atan2(Fraction(y), Fraction(x)))
+        return Angle.from_rad(math.atan2(Fraction(y), Fraction(x)))
 
-    def adjust(self):
-        """Adjust the Format of the Angle, Satisfy: `0 <= d < 360`, `0 <= m, s < 60`
+    def __adjust(self):
+        """Adjust the Format of the Angle, Satisfy: `0 <= __deg < 360`
         """
-        while self._deg < 0:
-            self._deg += 360
-        while self._deg >= 360:
-            self._deg -= 360
+        while self.__deg < 0:
+            self.__deg += 360
+        while self.__deg >= 360:
+            self.__deg -= 360
 
-    def deg_i(self) -> int:
+    def get_deg(self) -> int:
         """Get deg in the fmt of DMS
         """
-        return int(float(self._deg))
+        return int(float(self.__deg))
 
-    def min_i(self) -> int:
+    def get_min(self) -> int:
         """Get minute in the fmt of DMS
         """
-        return int((self._deg - Fraction(self.deg_i())) * Fraction(60))
+        return int((self.__deg - Fraction(self.get_deg())) * Fraction(60))
 
-    def sec_f(self) -> float:
+    def get_sec(self) -> float:
         """Get sec in the fmt of DMS
         """
-        angle_min = self._deg * 60
+        angle_min = self.__deg * 60
         return float((angle_min - int(angle_min)) * 60)
 
-    def __add__(self, other: 'Angle'):
+    def __add__(self, other: "Angle"):
         """(+)Calculate the sum of self and angle
         """
-        return Angle(self._deg.__add__(other._deg))
+        return Angle(self.__deg.__add__(other.__deg))
 
-    def __sub__(self, other: 'Angle'):
+    def __sub__(self, other: "Angle"):
         """(-)Calculate the difference of self(minuend) and angle(subtrahend)
         """
-        return Angle(self._deg.__sub__(other._deg))
+        return Angle(self.__deg.__sub__(other.__deg))
 
-    def __mul__(self, n: input_t):
+    def __mul__(self, n: input_types):
         """(*)Calculate the product of self and angle
         """
-        return Angle(self._deg.__mul__(Fraction(n)))
+        return Angle(self.__deg.__mul__(Fraction(n)))
 
-    def __truediv__(self, n: input_t):
+    def __truediv__(self, n: input_types):
         """(/)Calculate the true quotient of self(dividend) and angle(divisor)
         """
-        return Angle(self._deg.__truediv__(Fraction(n)))
+        return Angle(self.__deg.__truediv__(Fraction(n)))
 
-    def __floordiv__(self, n: input_t):
+    def __floordiv__(self, n: input_types):
         """(//)Calculate the floor quotient of self(dividend) and angle(divisor)
         """
-        return Angle(self._deg.__floordiv__(Fraction(n)))
+        return Angle(self.__deg.__floordiv__(Fraction(n)))
 
-    def __mod__(self, other: 'Angle'):
+    def __mod__(self, other: "Angle"):
         """(%)Calculate the remainder of self(dividend) and angle(divisor)
         """
-        return Angle(self._deg.__mod__(other._deg))
+        return Angle(self.__deg.__mod__(other.__deg))
 
-    def __cmp__(self, other: 'Angle'):
+    def __cmp__(self, other: "Angle"):
         """compare two angles
         -1 if self <  other;
          0 if self == other;
          1 if self >  other;
         """
-        return self._deg - other._deg
+        return self.__deg - other.__deg
 
-    def __eq__(self, other: 'Angle'):
+    def __eq__(self, other: "Angle"):
         """==
         """
         return self.__cmp__(other) == 0
 
-    def __ne__(self, other: 'Angle'):
+    def __ne__(self, other: "Angle"):
         """!=
         """
         return self.__cmp__(other) != 0
 
-    def __le__(self, other: 'Angle'):
-        """<=
+    def __le__(self, other: "Angle"):
+        """\<=
         """
         return self.__cmp__(other) <= 0
 
-    def __lt__(self, other: 'Angle'):
-        """<
+    def __lt__(self, other: "Angle"):
+        """\<
         """
         return self.__cmp__(other) < 0
 
-    def __ge__(self, other: 'Angle'):
-        """>=
+    def __ge__(self, other: "Angle"):
+        """\>=
         """
         return self.__cmp__(other) >= 0
 
-    def __gt__(self, other: 'Angle'):
-        """>
+    def __gt__(self, other: "Angle"):
+        """\>
         """
         return self.__cmp__(other) > 0
 
     def __str__(self) -> str:
         """Convert angle into string(" " as interval)
         """
-        return "{:d} {:d} {:.2f}".format(
-            self.deg_i(), self.min_i(), self.sec_f()
-        )
+        return "{:d} {:d} {:.2f}".format(self.get_deg(), self.get_min(), self.get_sec())
 
-    def to_deg(self) -> float:
+    def to_degrees(self) -> float:
         """Convert angle into degrees(only deg(float) without minute & sec)
         """
-        return float(self._deg)
+        return float(self.__deg)
 
     def to_rad(self) -> float:
         """Convert angle into radians(float)
         """
-        return math.radians(self.to_deg())
+        return math.radians(self.to_degrees())
 
     def to_atan2(self, x=None, y=None) -> (float, float):
         """Convert angle into `(x', y')` by `(x, y)`.
@@ -171,7 +174,7 @@ class Angle:
         >>> angle.to_atan2()
         (0.707, 0.707)
         """
-        # base tan = y / x
+        # base: tan = y / x
         # default: x = cos, y = sin
         if x is None and y is None:
             return self.cos(), self.sin()
@@ -184,49 +187,50 @@ class Angle:
         # x, y are both not None and valid
         elif math.isclose(y / x, self.tan()):
             return x, y  # return themselves if checked
-        raise Exception('Invalid x,y pair!')
+        raise Exception("Invalid x,y pair!")
 
-    def fmt_str(self, fmt="aaa°bbb′ccc″") -> str:
-        """Convert angle into string of fmt(default: `"aaa°bbb′ccc″"`)
-        `aaa` is deg, `bbb` is minute, `ccc` is sec, `DDD` is only deg(float),
-        `RRR` is radian, `XXX` is horizontal ordinate, `YYY` is vertical ordinate.
-        > default: `{:.2f}`
+    def to_fmt_str(self, fmt="aaa°bbb′ccc″", decimal: int = 2) -> str:
+        """Convert angle into string of fmt
+        `aaa` is deg(int), `bbb` is minute(int), `ccc` is sec(float), `DDD` is only deg(float),
+        `RRR` is radian(float), `XXX` is horizontal ordinate(float), `YYY` is vertical ordinate(float).
+        > default: fmt = "aaa°bbb′ccc″"`, decimal = 2
         Eg.
         >>> angle = Angle(45)
-        >>> angle.fmt_str()
+        >>> angle.to_fmt_str()
         2°4′6″
-        >>> angle.fmt_str(fmt="aaaDbbbMcccS")
+        >>> angle.to_fmt_str(fmt="aaaDbbbMcccS")
         3D5M7S
-        >>> angle.fmt_str(fmt="aaa bbb ccc")
+        >>> angle.to_fmt_str(fmt="aaa bbb ccc")
         1 4 9
-        >>> angle.fmt_str(fmt="DDDD")
+        >>> angle.to_fmt_str(fmt="DDDD")
         123D
-        >>> angle.fmt_str(fmt="RRRrad")
+        >>> angle.to_fmt_str(fmt="RRRrad")
         1.99rad
-        >>> angle.fmt_str(fmt="XXX, YYY")
+        >>> angle.to_fmt_str(fmt="XXX, YYY")
         0.5, 0.87
         """
         # DMS
         if fmt.find("aaa") >= 0 and fmt.find("bbb") >= 0 and fmt.find("ccc") >= 0:
             return (
-                fmt.replace("aaa", str(self.deg_i()), 1)  # deg
-                    .replace("bbb", str(self.min_i()), 1)  # minute
-                    .replace("ccc", "{:.2f}".format(self.sec_f()), 1)  # sec
+                fmt.replace("aaa", str(self.get_deg()), 1)  # deg
+                .replace("bbb", str(self.get_min()), 1)  # minute
+                .replace("ccc", ("{:.%df}" % decimal).format(self.get_sec()), 1)  # sec
             )
         # Degree
         elif fmt.find("DDD") >= 0:
-            return fmt.replace("DDD", "{:.2f}".format(self.to_deg()), 1)
+            return fmt.replace(
+                "DDD", ("{:.%df}" % decimal).format(self.to_degrees()), 1
+            )
         # Radian
         elif fmt.find("RRR") >= 0:
-            return fmt.replace("RRR", "{:.2f}".format(self.to_rad()), 1)
+            return fmt.replace("RRR", ("{:.%df}" % decimal).format(self.to_rad()), 1)
         # (x, y)
         elif fmt.find("XXX") >= 0 and fmt.find("YYY") >= 0:
             x_y_pair = self.to_atan2()  # get the tuple of (x, y)
-            return fmt.replace("XXX", "{:.2f}".format(x_y_pair[0])).replace(
-                "YYY", "{:.2f}".format(x_y_pair[1])
-            )
-        # TODO raise Exception
-        pass
+            return fmt.replace(
+                "XXX", ("{:.%df}" % decimal).format(x_y_pair[0])
+            ).replace("YYY", ("{:.%df}" % decimal).format(x_y_pair[1]))
+        raise Exception("Invalid fmt!")
 
     def sin(self) -> float:
         """sinθ
@@ -243,37 +247,37 @@ class Angle:
         """
         return math.tan(self.to_rad())
 
-    def isZeroAngle(self) -> bool:
+    def is_zero_angle(self) -> bool:
         """Judge if it is zero angle, that is, 0°
         """
-        return math.isclose(self.to_deg(), 0)
+        return math.isclose(self.to_degrees(), 0)
 
-    def isAcuteAngle(self) -> bool:
+    def is_acute_angle(self) -> bool:
         """Judge if it is acute angle(0°, 90°)
         """
-        return 0 < self.to_deg() < 90
+        return 0 < self.to_degrees() < 90
 
-    def isRightAngle(self) -> bool:
+    def is_right_angle(self) -> bool:
         """Judge if it is right angle, that is, 90°
         """
-        return math.isclose(self.to_deg(), 90)
+        return math.isclose(self.to_degrees(), 90)
 
-    def isObtuseAngle(self) -> bool:
+    def is_obtuse_angle(self) -> bool:
         """Judge if it is obtuse angle(90°, 180°)
         """
-        return 90 < self.to_deg() < 180
+        return 90 < self.to_degrees() < 180
 
-    def isMinorAngle(self) -> bool:
+    def is_minor_angle(self) -> bool:
         """Judge if it is minor angle(0°, 180°)
         """
-        return 0 < self.to_deg() < 180
+        return 0 < self.to_degrees() < 180
 
-    def isStraightAngle(self) -> bool:
+    def is_straight_angle(self) -> bool:
         """Judge if it is right angle, that is, 180°
         """
-        return math.isclose(self.to_deg(), 180)
+        return math.isclose(self.to_degrees(), 180)
 
-    def isMajorAngle(self) -> bool:
+    def is_major_angle(self) -> bool:
         """Judge if it is major angle(180°, 360°)
         """
-        return 180 < self.to_deg() < 360
+        return 180 < self.to_degrees() < 360
