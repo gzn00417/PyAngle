@@ -11,11 +11,11 @@ A simple package for angle calculation
 
 class Angle:
     """Class of Mathematic Angle
-    > designed especially for angle in the fmt of DMS(Degree, Minute and Second)
+    > designed especially for angle in the format of DMS(Degree, Minute and Second)
     > immutable object
-    `deg` (int): deg of the angle;
+    `deg` (int): degree of the angle;
     `minute` (int): minute of the angle;
-    `sec` (float): sec of the angle;
+    `sec` (float): second of the angle;
     """
 
     _deg: Fraction = Fraction(0)
