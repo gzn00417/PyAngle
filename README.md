@@ -73,7 +73,6 @@ pip install PyAngle
 
 ## Future Features
 
-- [ ] Support `sort()`
 - [ ] `Angle[] toAnglesFromXYs((float, float)[] angles)`: 参数为(x, y)元组的列表
 - [ ] `Angle[] toAnglesFromDegrees(float[] angles)`: 参数为 degree 元组的列表
 - [ ] `Angle[] toAnglesFromRads(float[] angles)`: 参数为 rad 元组的列表

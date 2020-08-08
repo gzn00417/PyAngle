@@ -109,9 +109,9 @@ class Angle:
 
     def __cmp__(self, other: "Angle"):
         """compare two angles
-        -1 if self <  other;
-         0 if self == other;
-         1 if self >  other;
+        negative if self <  other;
+        zero     if self == other;
+        positive if self >  other;
         """
         return self.__deg - other.__deg
 

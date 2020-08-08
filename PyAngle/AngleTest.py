@@ -89,6 +89,14 @@ class AngleTest(TestCase):
         self.assertTrue(angle1 == angle5)
         self.assertEqual(angle1, max(angle1, angle2))
         self.assertEqual(angle3, min(angle3, angle4))
+        list1 = [angle2, angle1, angle3, angle4]
+        list2 = list1
+        list2.sort()
+        self.assertListEqual(list1, list2)
+        list2 = list1
+        list2.sort(reverse=True)
+        list1.reverse()
+        self.assertListEqual(list1, list2)
 
     def test_trigonometric_functions(self):
         angle1 = Angle.from_dms(deg=30)
