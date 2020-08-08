@@ -13,6 +13,7 @@ class Angle:
     """Class of Mathematic Angle
     > designed especially for angle in the format of DMS(Degree, Minute and Second)
     > immutable object
+    > guarantee `0 <= degrees < 360` 
     `deg` (int): degree of the angle in the format of DMS;
     `min` (int): minute of the angle in the format of DMS;
     `sec` (float): second of the angle in the format of DMS;
@@ -23,32 +24,30 @@ class Angle:
 
     __deg: Fraction = Fraction(0)
 
-    def __init__(self, deg: input_types):
+    def __init__(self, deg: float):
         self.__deg = Fraction(deg)
         self.__adjust()
 
     @staticmethod
-    def from_dms(
-        deg: input_types, min: input_types = 0, sec: input_types = 0
-    ) -> "Angle":
+    def from_dms(deg: float, min: float = 0, sec: float = 0) -> "Angle":
         """Factory Method for Degree, Minute and Second
         """
         return Angle(Fraction(deg) + Fraction(min) / 60 + Fraction(sec) / 3600)
 
     @staticmethod
-    def from_degrees(degrees: input_types) -> "Angle":
+    def from_degrees(degrees: float) -> "Angle":
         """Factory Method for ONLY Degree
         """
         return Angle(degrees)
 
     @staticmethod
-    def from_rad(rad: input_types) -> "Angle":
+    def from_rad(rad: float) -> "Angle":
         """Factory Method for Radian
         """
         return Angle(Fraction(math.degrees(Fraction(rad))))
 
     @staticmethod
-    def from_atan2(x: input_types, y: input_types) -> "Angle":
+    def from_atan2(x: float, y: float) -> "Angle":
         """Factory Method for (x, y)
         """
         return Angle.from_rad(math.atan2(Fraction(y), Fraction(x)))
@@ -87,17 +86,17 @@ class Angle:
         """
         return Angle(self.__deg.__sub__(other.__deg))
 
-    def __mul__(self, n: input_types):
+    def __mul__(self, n: float):
         """(*)Calculate the product of self and angle
         """
         return Angle(self.__deg.__mul__(Fraction(n)))
 
-    def __truediv__(self, n: input_types):
+    def __truediv__(self, n: float):
         """(/)Calculate the true quotient of self(dividend) and angle(divisor)
         """
         return Angle(self.__deg.__truediv__(Fraction(n)))
 
-    def __floordiv__(self, n: input_types):
+    def __floordiv__(self, n: float):
         """(//)Calculate the floor quotient of self(dividend) and angle(divisor)
         """
         return Angle(self.__deg.__floordiv__(Fraction(n)))
@@ -109,9 +108,9 @@ class Angle:
 
     def __cmp__(self, other: "Angle"):
         """compare two angles
-        -1 if self <  other;
-         0 if self == other;
-         1 if self >  other;
+        negative if self <  other;
+        zero     if self == other;
+        positive if self >  other;
         """
         return self.__deg - other.__deg
 
@@ -150,6 +149,11 @@ class Angle:
         """
         return "{:d} {:d} {:.2f}".format(self.get_deg(), self.get_min(), self.get_sec())
 
+    def __hash__(self) -> int:
+        """hash(self)
+        """
+        return self.__deg.__hash__()
+
     def to_degrees(self) -> float:
         """Convert angle into degrees(only deg(float) without minute & sec)
         """
@@ -160,7 +164,7 @@ class Angle:
         """
         return math.radians(self.to_degrees())
 
-    def to_atan2(self, x=None, y=None) -> (float, float):
+    def to_atan2(self, x: float = None, y: float = None) -> (float, float):
         """Convert angle into `(x', y')` by `(x, y)`.
         When one of x, y is None, calculate the value of the other one(if not None) that satisfies `y / x = tan`.
         When both of x, y is Nones, returns (x', y') that satisfies `x'^2 + y'^2 = 1`, that is, `x' = cos, y' = sin`
@@ -189,7 +193,7 @@ class Angle:
             return x, y  # return themselves if checked
         raise Exception("Invalid x,y pair!")
 
-    def to_fmt_str(self, fmt="aaa°bbb′ccc″", decimal: int = 2) -> str:
+    def to_fmt_str(self, fmt: str = "aaa°bbb′ccc″", decimal: int = 2) -> str:
         """Convert angle into string of fmt
         `aaa` is deg(int), `bbb` is minute(int), `ccc` is sec(float), `DDD` is only deg(float),
         `RRR` is radian(float), `XXX` is horizontal ordinate(float), `YYY` is vertical ordinate(float).
@@ -281,3 +285,13 @@ class Angle:
         """Judge if it is major angle(180°, 360°)
         """
         return 180 < self.to_degrees() < 360
+
+    def is_complementary_angle_with(self, other: "Angle") -> bool:
+        """Judge if they are complementary angles
+        """
+        return math.isclose((self + other).to_degrees(), 90)
+
+    def is_supplementary_angle_with(self, other: "Angle") -> bool:
+        """Judge if they are supplementary angles
+        """
+        return math.isclose((self + other).to_degrees(), 180)

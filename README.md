@@ -41,6 +41,7 @@ pip install PyAngle
 - [x] `__lt__(self, other)`: "<"
 - [x] `__ge__(self, other)`: ">="
 - [x] `__gt__(self, other)`: ">"
+- [x] `__hash__(self)`
 
 ### Calculators
 
@@ -70,10 +71,11 @@ pip install PyAngle
 - [x] `bool is_straight_angle()`: 平角
 - [x] `bool is_major_angle()`: 优角
 - [x] `bool is_minor_angle()`: 劣角
+- [x] `bool is_complementary_angle_with(other)`: 余角
+- [x] `bool is_supplementary_angle_with(other)`: 补角
 
 ## Future Features
 
-- [ ] Support `sort()`
 - [ ] `Angle[] toAnglesFromXYs((float, float)[] angles)`: 参数为(x, y)元组的列表
 - [ ] `Angle[] toAnglesFromDegrees(float[] angles)`: 参数为 degree 元组的列表
 - [ ] `Angle[] toAnglesFromRads(float[] angles)`: 参数为 rad 元组的列表
