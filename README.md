@@ -120,13 +120,33 @@ True
 - [x] `is_complementary_angle_with(other) -> bool`: 余角
 - [x] `is_supplementary_angle_with(other) -> bool`: 补角
 
-## Future Features
+# module AngleListAPIs
 
-- [ ] `Angle[] toAnglesFromXYs((float, float)[] angles)`: 参数为(x, y)元组的列表
-- [ ] `Angle[] toAnglesFromDegrees(float[] angles)`: 参数为 degree 元组的列表
-- [ ] `Angle[] toAnglesFromRads(float[] angles)`: 参数为 rad 元组的列表
-- [ ] `(float, float)[] toXYsFromAngles(Angle[] angles)`
-- [ ] `float[] toDegreesFromAngles(Angle[] angles)`
-- [ ] `float[] toRadsFromAngles(Angle[] angles)`
+## APIs
+
+```python
+>>> AngleListAPIs.from_angle_list_to_atan2_list(angle_list)
+[(0.3342377271245026, 0.9424888019316975), (0.5000000000000001, 0.8660254037844386), (0.658504607868518, 0.7525766947068778), (0.8630773966838536, 0.5050716853412216)]
+>>> AngleListAPIs.from_rad_list_to_angle_list([1.23, 1.0471975511965976, 0.8519663271732721, 0.5294650211397243])
+[<PyAngle.Angle.Angle object at 0x0000028ED1910DD8>, <PyAngle.Angle.Angle object at 0x0000028ED1910E48>, <PyAngle.Angle.Angle object at 0x0000028ED1910EB8>, <PyAngle.Angle.Angle object at 0x0000028ED1910F28>]
+```
+
+- [x] `from_atan2_list_to_angle_list(angles: [(float, float)]) -> ["Angle"]`
+- [x] `from_degrees_list_to_angle_list(angles: [float]) -> ["Angle"]`
+- [x] `from_rad_list_to_angle_list(angles: [float]) -> ["Angle"]`
+- [x] `from_angle_list_to_atan2_list(angles: ["Angle"]) -> [(float, float)]`
+- [x] `from_angle_list_to_degrees_list(angles: ["Angle"]) -> [float]`
+- [x] `from_angle_list_to_rad_list(angles: ["Angle"]) -> [float]`
+
+```python
+# When needed to switch within atan2, degrees and rad, switch via angle list
+>>> degrees_list = [1.2, 3.4, 5.6, 7.8, 9.0]
+>>> atan2_list = AngleListAPIs.from_angle_list_to_atan2_list(AngleListAPIs.from_degrees_list_to_angle_list(degrees_list))
+>>> atan2_list
+[(0.9997806834748455, 0.020942419883356957), (0.9982398279237653, 0.05930637357596162), (0.9952273999818312, 0.09758289975914947), (0.9907478404714436, 0.13571557243430438), (0.9876883405951378, 0.15643446504023087)]
+```
+
+# Future Features
+
 - [ ] `Angle getNearestAngle(Angle angle, Angle[] angles)`: 在`angles`中找到与`angle`最近的角
 - [ ] `Angle getFurthestAngle(Angle angle, Angle[] angles)`: 在`angles`中找到与`angle`最远的角
