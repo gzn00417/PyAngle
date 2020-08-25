@@ -146,7 +146,24 @@ True
 [(0.9997806834748455, 0.020942419883356957), (0.9982398279237653, 0.05930637357596162), (0.9952273999818312, 0.09758289975914947), (0.9907478404714436, 0.13571557243430438), (0.9876883405951378, 0.15643446504023087)]
 ```
 
+- [x] `get_nearest_angle(angle: "Angle", angles: ["Angle"]) -> "Angle"`: 在`angles`中找到与`angle`最近的角
+- [x] `get_furthest_angle(angle: "Angle", angles: ["Angle"]) -> "Angle"`: 在`angles`中找到与`angle`最远的角
+
+```python
+>>> nearest_angle = get_nearest_angle(angle, angles)
+```
+
 # Future Features
 
-- [ ] `Angle getNearestAngle(Angle angle, Angle[] angles)`: 在`angles`中找到与`angle`最近的角
-- [ ] `Angle getFurthestAngle(Angle angle, Angle[] angles)`: 在`angles`中找到与`angle`最远的角
+## 2.4
+
+`class UnlimitedAngle`
+
+- degrees ranges [-∞, +∞] (without restrict)
+- support `toAngle()` for switch `UnlimitedAngle` into `Angle`
+
+## 3.0
+
+> Draw Angle on Axis
+
+- [ ] `plot(length, origin=(0, 0), base_angle=Angle.from_degrees(degrees=0), counter_clock_wise=True)`

@@ -51,6 +51,40 @@ class AngleListAPIsTest(TestCase):
             from_rad_list_to_angle_list([r1, r2, r3]),
         )
 
+    def test_get_nearest_or_furthest_angle(self):
+        angle1 = Angle.from_degrees(degrees=1)
+        angle2 = Angle.from_degrees(degrees=5)
+        angle3 = Angle.from_degrees(degrees=10)
+        angle4 = Angle.from_degrees(degrees=100)
+        angle5 = Angle.from_degrees(degrees=181)
+        angle6 = Angle.from_degrees(degrees=270)
+        angle7 = Angle.from_degrees(degrees=359)
+        # get_nearest_angle
+        self.assertIsNone(get_nearest_angle(angle1, []))
+        self.assertEqual(angle2, get_nearest_angle(angle1, [angle2, angle3]))
+        self.assertEqual(
+            angle7,
+            get_nearest_angle(angle1, [angle2, angle3, angle4, angle5, angle6, angle7]),
+        )
+        self.assertEqual(
+            angle3, get_nearest_angle(angle2, [angle3, angle4, angle5, angle6, angle7])
+        )
+        # get_furthest_angle
+        self.assertIsNone(get_furthest_angle(angle1, []))
+        self.assertEqual(angle3, get_furthest_angle(angle1, [angle2, angle3]))
+        self.assertEqual(
+            angle5,
+            get_furthest_angle(
+                angle1, [angle2, angle3, angle4, angle5, angle6, angle7]
+            ),
+        )
+        self.assertEqual(
+            angle6,
+            get_furthest_angle(
+                angle4, [angle1, angle2, angle3, angle4, angle5, angle6, angle7]
+            ),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
