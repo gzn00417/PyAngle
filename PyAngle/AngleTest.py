@@ -25,6 +25,12 @@ class AngleTest(TestCase):
         angle4 = Angle.from_atan2(x=1, y=1)
         self.assertAlmostEqual(45, angle4.get_deg(), delta=1)
 
+        angle5 = Angle.from_degrees(degrees=1000)
+        self.assertEqual(280, angle5.to_degrees())
+
+        angle6 = Angle.from_degrees(degrees=-1000)
+        self.assertEqual(80, angle6.to_degrees())
+
     def test_add(self):
         angle1 = Angle.from_dms(deg=100, min=10, sec=1)
         angle2 = Angle.from_dms(deg=300, min=30, sec=3)

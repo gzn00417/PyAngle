@@ -1,12 +1,5 @@
 import math
 from fractions import Fraction
-from typing import Union
-
-input_types = Union[int, float, str, Fraction]
-
-"""
-A simple package for angle calculation
-"""
 
 
 class Angle:
@@ -79,32 +72,32 @@ class Angle:
     def __add__(self, other: "Angle"):
         """(+)Calculate the sum of self and angle
         """
-        return Angle(self.__deg.__add__(other.__deg))
+        return self.from_degrees(self.__deg.__add__(other.__deg))
 
     def __sub__(self, other: "Angle"):
         """(-)Calculate the difference of self(minuend) and angle(subtrahend)
         """
-        return Angle(self.__deg.__sub__(other.__deg))
+        return self.from_degrees(self.__deg.__sub__(other.__deg))
 
     def __mul__(self, n: float):
         """(*)Calculate the product of self and angle
         """
-        return Angle(self.__deg.__mul__(Fraction(n)))
+        return self.from_degrees(self.__deg.__mul__(Fraction(n)))
 
     def __truediv__(self, n: float):
         """(/)Calculate the true quotient of self(dividend) and angle(divisor)
         """
-        return Angle(self.__deg.__truediv__(Fraction(n)))
+        return self.from_degrees(self.__deg.__truediv__(Fraction(n)))
 
     def __floordiv__(self, n: float):
         """(//)Calculate the floor quotient of self(dividend) and angle(divisor)
         """
-        return Angle(self.__deg.__floordiv__(Fraction(n)))
+        return self.from_degrees(self.__deg.__floordiv__(Fraction(n)))
 
     def __mod__(self, other: "Angle"):
         """(%)Calculate the remainder of self(dividend) and angle(divisor)
         """
-        return Angle(self.__deg.__mod__(other.__deg))
+        return self.from_degrees(self.__deg.__mod__(other.__deg))
 
     def __cmp__(self, other: "Angle"):
         """compare two angles

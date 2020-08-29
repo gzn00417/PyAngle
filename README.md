@@ -8,7 +8,7 @@
 pip install PyAngle
 ```
 
-# class Angle
+# class `Angle`
 
 > Designed especially for angle in the form of DMS(Degree, Minute and Second)
 >
@@ -120,7 +120,7 @@ True
 - [x] `is_complementary_angle_with(other) -> bool`: 余角
 - [x] `is_supplementary_angle_with(other) -> bool`: 补角
 
-# module AngleListAPIs
+# module `AngleListAPIs`
 
 ## APIs
 
@@ -153,14 +153,18 @@ True
 >>> nearest_angle = get_nearest_angle(angle, angles)
 ```
 
+# class `UnlimitedAngle`
+
+> degrees ranges [-∞, +∞] (without restrict)
+
+```python
+>>> ua1 = UnlimitedAngle.from_degrees(degrees=1000)
+>>> ua2 = UnlimitedAngle.from_degrees(degrees=-1000)
+```
+
+- [x] `to_Angle()`: switch `UnlimitedAngle` into `Angle`
+
 # Future Features
-
-## 2.4
-
-`class UnlimitedAngle`
-
-- degrees ranges [-∞, +∞] (without restrict)
-- support `toAngle()` for switch `UnlimitedAngle` into `Angle`
 
 ## 3.0
 
