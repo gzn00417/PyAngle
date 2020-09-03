@@ -4,8 +4,16 @@
 
 ## Use
 
-```
+install
+
+```shell
 pip install PyAngle
+```
+
+import
+
+```python
+from PyAngle import *
 ```
 
 # class `Angle`
@@ -15,6 +23,12 @@ pip install PyAngle
 > immutable object
 >
 > default: public, non-static
+
+import
+
+```python
+from PyAngle.Angle import Angle
+```
 
 ## APIs
 
@@ -122,6 +136,12 @@ True
 
 # module `AngleListAPIs`
 
+import
+
+```python
+from PyAngle.AngleListAPIs import *
+```
+
 ## APIs
 
 ```python
@@ -157,12 +177,18 @@ True
 
 > degrees ranges [-∞, +∞] (without restrict)
 
+import
+
+```python
+from PyAngle.UnlimitedAngle import UnlimitedAngle
+```
+
+- [x] `to_Angle()`: switch `UnlimitedAngle` into `Angle`
+
 ```python
 >>> ua1 = UnlimitedAngle.from_degrees(degrees=1000)
 >>> ua2 = UnlimitedAngle.from_degrees(degrees=-1000)
 ```
-
-- [x] `to_Angle()`: switch `UnlimitedAngle` into `Angle`
 
 # Future Features
 
