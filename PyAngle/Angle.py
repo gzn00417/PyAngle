@@ -17,8 +17,8 @@ class Angle:
 
     __deg: Fraction = Fraction(0)
 
-    def __init__(self, deg: float):
-        self.__deg = Fraction(deg)
+    def __init__(self, a: "Angle"):
+        self.__deg = Fraction(a.to_degrees() if isinstance(a, Angle) else a)
         self.__adjust()
 
     @staticmethod

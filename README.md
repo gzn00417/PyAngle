@@ -39,6 +39,7 @@ from PyAngle.Angle import Angle
 >>> a2 = Angle.from_degrees(degrees=60)
 >>> a3 = Angle.from_rad(rad=1.23)
 >>> a4 = Angle.from_atan2(x=0.7, y=0.8)
+>>> a5 = Angle(a4)
 ```
 
 - [x] `from_dms(deg, min=0, sec=0) -> Angle`
@@ -188,6 +189,8 @@ from PyAngle.UnlimitedAngle import UnlimitedAngle
 ```python
 >>> ua1 = UnlimitedAngle.from_degrees(degrees=1000)
 >>> ua2 = UnlimitedAngle.from_degrees(degrees=-1000)
+>>> ua3 = UnlimitedAngle(ua1)
+>>> ua4 = UnlimitedAngle(Angle(UnlimitedAngle(ua2)))
 ```
 
 # Future Features

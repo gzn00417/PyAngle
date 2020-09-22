@@ -8,8 +8,8 @@ class UnlimitedAngle(Angle):
     """Extends from `Angle` whose degrees ranges [-∞, +∞] (without restrict)
     """
 
-    def __init__(self, deg: float):
-        super().__init__(deg=deg)
+    def __init__(self, a: "Angle"):
+        super().__init__(a)
 
     def _Angle__adjust(self):
         """Do not adjust degrees since it's unlimited

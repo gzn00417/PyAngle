@@ -2,8 +2,7 @@ import unittest
 from unittest import TestCase
 import math
 
-from PyAngle.Angle import *
-from PyAngle.UnlimitedAngle import *
+from PyAngle import *
 
 
 class UnlimitedAngleTest(TestCase):
@@ -12,6 +11,8 @@ class UnlimitedAngleTest(TestCase):
         self.assertEqual(1000, ua1.to_degrees())
         ua2 = UnlimitedAngle.from_degrees(degrees=-1000)
         self.assertEqual(-1000, ua2.to_degrees())
+        ua3 = UnlimitedAngle(Angle(UnlimitedAngle.from_degrees(degrees=1000)))
+        self.assertEqual(1280, (ua1 + ua3).to_degrees())
 
     def test_to_Angle(self):
         a1 = UnlimitedAngle.from_degrees(degrees=1000).to_Angle()

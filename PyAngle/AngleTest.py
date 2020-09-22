@@ -2,7 +2,7 @@ import unittest
 from unittest import TestCase
 import math
 
-from PyAngle.Angle import *
+from PyAngle import *
 
 
 class AngleTest(TestCase):
@@ -30,6 +30,12 @@ class AngleTest(TestCase):
 
         angle6 = Angle.from_degrees(degrees=-1000)
         self.assertEqual(80, angle6.to_degrees())
+
+        angle7 = Angle(angle6)
+        self.assertEqual(80, angle7.to_degrees())
+
+        angle8 = Angle(UnlimitedAngle.from_degrees(degrees=1000))
+        self.assertEqual(280, angle8.to_degrees())
 
     def test_add(self):
         angle1 = Angle.from_dms(deg=100, min=10, sec=1)
