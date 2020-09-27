@@ -7,6 +7,7 @@ from PyAngle import *
 
 class AngleTest(TestCase):
     def test_init(self):
+        # from 4 basic ways
         angle1 = Angle.from_dms(deg=1.0, min=2.0, sec=3.0)
         self.assertEqual(1, angle1.get_deg())
         self.assertEqual(2, angle1.get_min())
@@ -25,17 +26,34 @@ class AngleTest(TestCase):
         angle4 = Angle.from_atan2(x=1, y=1)
         self.assertAlmostEqual(45, angle4.get_deg(), delta=1)
 
+        # adjust
         angle5 = Angle.from_degrees(degrees=1000)
         self.assertEqual(280, angle5.to_degrees())
 
         angle6 = Angle.from_degrees(degrees=-1000)
         self.assertEqual(80, angle6.to_degrees())
 
+        # Nest
         angle7 = Angle(angle6)
         self.assertEqual(80, angle7.to_degrees())
 
         angle8 = Angle(UnlimitedAngle.from_degrees(degrees=1000))
         self.assertEqual(280, angle8.to_degrees())
+
+        # from_fmt_str
+        angle9 = Angle.from_fmt_str(angle_str="123.456d", fmt="DDDd")
+        self.assertEqual(123.456, angle9.to_degrees())
+
+        angle10 = Angle.from_fmt_str(angle_str="1°2.0′3.4″")
+        self.assertEqual(1, angle10.get_deg())
+        self.assertEqual(2, angle10.get_min())
+        self.assertAlmostEqual(3.4, angle10.get_sec())
+
+        angle11 = Angle.from_fmt_str(angle_str="1.57rad", fmt="RRRrad")
+        self.assertAlmostEqual(90, angle11.to_degrees(), delta=0.1)
+
+        angle12 = Angle.from_fmt_str(angle_str="2.5, 2.5", fmt="XXX, YYY")
+        self.assertAlmostEqual(45, angle12.to_degrees(), delta=0.1)
 
     def test_add(self):
         angle1 = Angle.from_dms(deg=100, min=10, sec=1)

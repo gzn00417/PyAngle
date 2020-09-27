@@ -18,7 +18,7 @@ URL = "https://github.com/gzn00417/PyAngle"
 EMAIL = "gzn00417@foxmail.com"
 AUTHOR = "Guo Zhuoning"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "2.5.0"
+VERSION = "2.6.0"
 
 # What packages are required for this module to be executed?
 REQUIRED = [

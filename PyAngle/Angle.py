@@ -21,29 +21,90 @@ class Angle:
         self.__deg = Fraction(a.to_degrees() if isinstance(a, Angle) else a)
         self.__adjust()
 
-    @staticmethod
-    def from_dms(deg: float, min: float = 0, sec: float = 0) -> "Angle":
+    @classmethod
+    def from_dms(cls, deg: float, min: float = 0, sec: float = 0) -> "Angle":
         """Factory Method for Degree, Minute and Second
         """
-        return Angle(Fraction(deg) + Fraction(min) / 60 + Fraction(sec) / 3600)
+        return cls.from_degrees(
+            degrees=Fraction(deg) + Fraction(min) / 60 + Fraction(sec) / 3600
+        )
 
-    @staticmethod
-    def from_degrees(degrees: float) -> "Angle":
+    @classmethod
+    def from_degrees(cls, degrees: float) -> "Angle":
         """Factory Method for ONLY Degree
         """
-        return Angle(degrees)
+        return cls(degrees)
 
-    @staticmethod
-    def from_rad(rad: float) -> "Angle":
+    @classmethod
+    def from_rad(cls, rad: float) -> "Angle":
         """Factory Method for Radian
         """
-        return Angle(Fraction(math.degrees(Fraction(rad))))
+        return cls.from_degrees(degrees=math.degrees(Fraction(rad)))
 
-    @staticmethod
-    def from_atan2(x: float, y: float) -> "Angle":
+    @classmethod
+    def from_atan2(cls, x: float, y: float) -> "Angle":
         """Factory Method for (x, y)
         """
-        return Angle.from_rad(math.atan2(Fraction(y), Fraction(x)))
+        return cls.from_rad(rad=math.atan2(Fraction(y), Fraction(x)))
+
+    @classmethod
+    def from_fmt_str(cls, angle_str: str, fmt: str = "aaa°bbb′ccc″") -> "Angle":
+        """Factory Method for Formatted String
+        `aaa` is deg(int), `bbb` is minute(int), `ccc` is sec(float), `DDD` is only deg(float),
+        `RRR` is radian(float), `XXX` is horizontal ordinate(float), `YYY` is vertical ordinate(float).
+        > default: fmt = "aaa°bbb′ccc″"`
+        Eg.
+        >>> angle = Angle.from_fmt_str(angle_str="2°4′6″")
+        >>> angle.get_deg(), angle.get_min(), angle.get_sec()
+        2, 4, 6.0
+        >>> angle = Angle.from_fmt_str(angle_str="1D2M3S", fmt="aaaDbbbMcccS")
+        >>> angle.get_deg(), angle.get_min(), angle.get_sec()
+        1, 2, 3.0
+        >>> Angle.from_fmt_str(angle_str="1deg", fmt="DDDdeg").to_degrees()
+        1.0
+        >>> Angle.from_fmt_str(angle_str="1.57rad", fmt="RRRrad").to_rad()
+        1.57
+        >>> angle = Angle.from_fmt_str(angle_str="1.2, 3.4", fmt="XXX, YYY")
+        >>> angle.to_atan2()
+        1.2, 3.4
+        """
+        import re
+
+        digit_pattern = "(-?\d+\.?\d*e?-?\d*?)"
+        # DMS
+        if fmt.find("aaa") >= 0 and fmt.find("bbb") >= 0 and fmt.find("ccc") >= 0:
+            pattern = (
+                fmt.replace("aaa", digit_pattern, 1)
+                .replace("bbb", digit_pattern, 1)
+                .replace("ccc", digit_pattern, 1)
+            )
+            matched = re.match(pattern, angle_str)
+            if matched:
+                return cls.from_dms(
+                    deg=matched.group(1), min=matched.group(2), sec=matched.group(3)
+                )
+        # Degree
+        elif fmt.find("DDD") >= 0:
+            pattern = fmt.replace("DDD", digit_pattern, 1)
+            matched = re.match(pattern, angle_str)
+            if matched:
+                return cls.from_degrees(float(matched.group(1)))
+        # Radian
+        elif fmt.find("RRR") >= 0:
+            pattern = fmt.replace("RRR", digit_pattern, 1)
+            matched = re.match(pattern, angle_str)
+            if matched:
+                return cls.from_rad(float(matched.group(1)))
+        # (x, y)
+        elif fmt.find("XXX") >= 0 and fmt.find("YYY") >= 0:
+            pattern = fmt.replace("XXX", digit_pattern, 1).replace(
+                "YYY", digit_pattern, 1
+            )
+            matched = re.match(pattern, angle_str)
+            if matched:
+                return cls.from_atan2(x=matched.group(1), y=matched.group(2))
+        raise Exception("Invalid fmt!")
+        return None
 
     def __adjust(self):
         """Adjust the Format of the Angle, Satisfy: `0 <= __deg < 360`

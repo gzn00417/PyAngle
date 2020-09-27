@@ -39,13 +39,15 @@ from PyAngle.Angle import Angle
 >>> a2 = Angle.from_degrees(degrees=60)
 >>> a3 = Angle.from_rad(rad=1.23)
 >>> a4 = Angle.from_atan2(x=0.7, y=0.8)
->>> a5 = Angle(a4)
+>>> a5 = Angle.from_fmt_str(angle_str="1°2′3″", fmt="aaa°bbb′ccc″")
+>>> a6 = Angle(a5)
 ```
 
 - [x] `from_dms(deg, min=0, sec=0) -> Angle`
 - [x] `from_degrees(degrees) -> Angle`
 - [x] `from_rad(rad) -> Angle`
 - [x] `from_atan2(x, y) -> Angle`
+- [x] `from_fmt_str(angle_str, fmt)`
 
 ### Operators
 
@@ -195,7 +197,24 @@ from PyAngle.UnlimitedAngle import UnlimitedAngle
 
 # Future Features
 
-## 3.0
+## 2.7
+
+> convert relation between `Angle` & `UnlimitedAngle`
+
+- `UnlimitedAngle` to be base class
+- `Angle` to be derived class
+
+> Rename `UnlimitedAngle` as `BaseAngle`, features remained
+
+- Provide `__adjust()` for derived class (empty at first)
+
+## 3.0 Beta
+
+- Modify `import PyAngle` as `import pyangle`
+
+## Global Coordinates
+
+## Plot
 
 > Draw Angle on Axis
 
